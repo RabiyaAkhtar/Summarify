@@ -19,14 +19,22 @@ summarizer = pipeline("summarization", model="facebook/bart-large-cnn")
 def get_youtube_transcript(url):
     try:
         video_id = re.search(r"v=([a-zA-Z0-9_-]+)", url).group(1)
-        transcript = YouTubeTranscriptApi.get_transcript(
-            video_id,
-            proxies={'http': 'http://proxy-ip:port'}  # Replace with actual proxy
-        )
+
+        # Use a proxy to bypass YouTube IP block (replace with your own working proxy)
+        proxies = {
+            'http': 'http://4.156.78.45',     # example proxy
+            'https': 'http://123.140.146.45'
+        }
+
+        transcript = YouTubeTranscriptApi.get_transcript(video_id, proxies=proxies)
         return " ".join([entry['text'] for entry in transcript])
+
     except Exception as e:
-        st.error(f"YouTube blocked the request. Try: \n1. Another video \n2. Upload a text file \n3. Wait and retry later.")
+        st.error(f"Error fetching transcript: {e}")
         return ""
+
+
+
 
 # Streamlit app layout
 st.set_page_config(page_title="Summarify", layout="wide")
