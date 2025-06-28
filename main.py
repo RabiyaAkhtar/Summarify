@@ -7,13 +7,25 @@ import re
 summarizer = pipeline("summarization", model="facebook/bart-large-cnn")
 
 # Helper function to extract text from a YouTube video transcript
+# def get_youtube_transcript(url):
+#     try:
+#         video_id = re.search(r"v=([a-zA-Z0-9_-]+)", url).group(1)
+#         transcript = YouTubeTranscriptApi.get_transcript(video_id)
+#         return " ".join([entry['text'] for entry in transcript])
+#     except Exception as e:
+#         st.error(f"Error fetching transcript: {e}")
+#         return ""
+
 def get_youtube_transcript(url):
     try:
         video_id = re.search(r"v=([a-zA-Z0-9_-]+)", url).group(1)
-        transcript = YouTubeTranscriptApi.get_transcript(video_id)
+        transcript = YouTubeTranscriptApi.get_transcript(
+            video_id,
+            proxies={'http': 'http://proxy-ip:port'}  # Replace with actual proxy
+        )
         return " ".join([entry['text'] for entry in transcript])
     except Exception as e:
-        st.error(f"Error fetching transcript: {e}")
+        st.error(f"YouTube blocked the request. Try: \n1. Another video \n2. Upload a text file \n3. Wait and retry later.")
         return ""
 
 # Streamlit app layout
