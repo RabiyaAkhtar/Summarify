@@ -30,3 +30,33 @@ pip install -r requirements.txt
 streamlit run app.py
 
 ---
+
+🎯 Usage
+Enter a YouTube URL in the input box.
+
+Click "Summarize" to generate a condensed transcript.
+
+Adjust summary length via the slider (optional).
+
+---
+
+📦 Dependencies
+Python 3.8+
+
+streamlit (UI)
+
+transformers (NLP pipeline)
+
+youtube-transcript-api (transcript extraction)
+
+---
+
+🌟 Future Improvements
+Add support for PDF/URL summarization.
+
+Cache transcripts for faster reloads.
+
+Deploy as a public API.
+
+---
+
